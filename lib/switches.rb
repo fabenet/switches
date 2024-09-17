@@ -49,22 +49,20 @@ class Pattern
 
   def visualGrid
     visual = "
-      0   1   2   3   4
-    ┌───┬───┬───┬───┬───┐
-  0 │ #{grid[0][0] ? 'x':' '} │ #{grid[1][0] ? 'x':' '} │ #{grid[2][0] ? 'x':' '} │ #{grid[3][0] ? 'x':' '} │ #{grid[4][0] ? 'x':' '} │
-    ├───┼───┼───┼───┼───┤
-  1 │ #{grid[0][1] ? 'x':' '} │ #{grid[1][1] ? 'x':' '} │ #{grid[2][1] ? 'x':' '} │ #{grid[3][1] ? 'x':' '} │ #{grid[4][1] ? 'x':' '} │
-    ├───┼───┼───┼───┼───┤
-  2 │ #{grid[0][2] ? 'x':' '} │ #{grid[1][2] ? 'x':' '} │ #{grid[2][2] ? 'x':' '} │ #{grid[3][2] ? 'x':' '} │ #{grid[4][2] ? 'x':' '} │
-    ├───┼───┼───┼───┼───┤
-  3 │ #{grid[0][3] ? 'x':' '} │ #{grid[1][3] ? 'x':' '} │ #{grid[2][3] ? 'x':' '} │ #{grid[3][3] ? 'x':' '} │ #{grid[4][3] ? 'x':' '} │
-    ├───┼───┼───┼───┼───┤
-  4 │ #{grid[0][4] ? 'x':' '} │ #{grid[1][4] ? 'x':' '} │ #{grid[2][4] ? 'x':' '} │ #{grid[3][4] ? 'x':' '} │ #{grid[4][4] ? 'x':' '} │
-    └───┴───┴───┴───┴───┘"
-  end
+        0   1   2   3   4
+      ┌───┬───┬───┬───┬───┐"
 
-  def winningPattern # Development method to test win condition
-    @grid = Array.new(5){Array.new(5, true)}
+    grid.each_with_index do |l, idx|
+      visual += "
+   #{idx}  │ #{l[0] ? 'x':' '} │ #{l[1] ? 'x':' '} │ #{l[2] ? 'x':' '} │ #{l[3] ? 'x':' '} │ #{l[4] ? 'x':' '} │"
+      if idx >= 4
+        break
+      end
+      visual += "
+      ├───┼───┼───┼───┼───┤"
+    end
+    visual += "
+      └───┴───┴───┴───┴───┘"
   end
 end
 
@@ -95,7 +93,7 @@ module Switches
         puts 'Invalid coordinates. ' + x.to_s+','+y.to_s
       end
 
-      pattern.switch(x,y)
+      pattern.switch(y,x) # fix because visual Grid is rotated 90°
 
       # win condition
       moves += 1
