@@ -14,14 +14,12 @@ class Pattern
         [false, false, true, false, false],
         [false, true, false, true, false],
         [true, false, false, false, true]]
-      when 2 # Diamond + Center
+      else # Diamond + Center
         [[false, false, true, false, false],
         [false, true, false, true, false],
         [true, false, true, false, true],
         [false, true, false, true, false],
         [false, false, true, false, false]]
-      else
-        puts 'why?'
       end
   end
 
@@ -30,18 +28,18 @@ class Pattern
   end
 
   def switch(x,y)
-    grid[x][y] = !grid[x][y]
-    if y+1 <= 4 # bottom
-      grid[x][y+1] = !grid[x][y+1]
-    end
-    if y-1 >= 0 # top
-      grid[x][y-1] = !grid[x][y-1]
-    end
-    if x-1 >= 0 # left
-      grid[x-1][y] = !grid[x-1][y]
-    end
-    if x+1 <= 4 # right
-      grid[x+1][y] = !grid[x+1][y]
+
+    directions = [[0,0],[1,0],[-1,0],[0,1],[0,-1]]
+    directions.each do |dir|
+      _x = x+dir[0]
+      _y = y+dir[1]
+      inBounds =
+        _x <= 4 && _x >= 0 &&
+        _y <= 4 && _y >= 0
+      
+      if inBounds
+        grid[_x][_y] = !grid[_x][_y]
+      end
     end
   end
 
