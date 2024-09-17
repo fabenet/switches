@@ -23,10 +23,6 @@ class Pattern
       end
   end
 
-  def check(x,y)
-    grid[x][y]
-  end
-
   def switch(x,y)
 
     directions = [[0,0],[1,0],[-1,0],[0,1],[0,-1]]
@@ -38,13 +34,13 @@ class Pattern
         _y <= 4 && _y >= 0
       
       if inBounds
-        grid[_x][_y] = !grid[_x][_y]
+        @grid[_x][_y] = !@grid[_x][_y]
       end
     end
   end
 
-  def grid
-    @grid
+  def won?
+    @grid.all? { |x| x.all? == true}
   end
 
   def visualGrid
@@ -52,7 +48,7 @@ class Pattern
         0   1   2   3   4
       ┌───┬───┬───┬───┬───┐"
 
-    grid.each_with_index do |l, idx|
+    @grid.each_with_index do |l, idx|
       visual += "
    #{idx}  │ #{l[0] ? 'x':' '} │ #{l[1] ? 'x':' '} │ #{l[2] ? 'x':' '} │ #{l[3] ? 'x':' '} │ #{l[4] ? 'x':' '} │"
       if idx >= 4
@@ -97,7 +93,7 @@ module Switches
 
       # win condition
       moves += 1
-      won = pattern.grid.all? { |x| x.all? == true}
+      won = pattern.won?
     end
     puts pattern.visualGrid
     puts
